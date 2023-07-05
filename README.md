@@ -16,5 +16,5 @@
  *
  * Author:  Starmark LN (Kornilov LN)
  * e-mail:  starmark.ln@ekatra.io
- *          starmark.ln@gmail.com
+ * e-mail:  starmark.ln@gmail.com
  * date:    21.06.2023
