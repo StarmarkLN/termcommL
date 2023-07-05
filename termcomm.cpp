@@ -73,17 +73,10 @@ void controller () {
 	struct tm* tm_info;
 	srand(time(NULL));
 
-    frame_draw ();
+    	frame_draw ();
  
 	while(1){
-/*
-		float a[3] = {0.0, 0.0, 0.0};
 
-		for (int i=0; i<3; i++) {
-			int r = rand() % 101 + (-50);
-			a[i] += (float)r / 1000;
-		}
-*/
 		if (alarm_counter < 30) {
 			print_alarm(0);
 			print_port_bits(port);
@@ -96,25 +89,25 @@ void controller () {
 		}
 		alarm_counter++;
 
-    	//--- Взять дату и время и подготовить к выводу
+    		//--- Взять дату и время и подготовить к выводу
 		time(&timer);
 		tm_info = localtime(&timer);
 
-    	//==================================
+    		//==================================
 		print_Data(dt.pv,  frmClim, "fff", "012");
 		print_Data(dt.Acc, frmAccl, "AAA", "xyz");
 		print_Data(dt.Gir, frmGiro, "GGG", "xyz");
 		print_Data(dt.Mag, frmMagn, "MMM", "xyz");
 		print_Data(dt.Bme, frmBme,  "GGG", "xyz");
 		print_time_date(tm_info);
-    	//==================================
+    		//==================================
 
 		port = rol(port);
 		gotoxy(1,18);
 
 		fflush(stdout);
-        usleep(PAUSE_LEN);
-    }
+        	usleep(PAUSE_LEN);
+    	}
 }
 
 //=======================================================================
@@ -122,15 +115,15 @@ void controller () {
 int main (void) {
 
 	clPort prt;
-    prt.Open();
+    	prt.Open();
 	prt.SetAttributes();
 
-    std::thread t1(controller);
+    	std::thread t1(controller);
 
-    prt.Work(dt);
+    	prt.Work(dt);
 
 	prt.Close();
-    t1.join();
+    	t1.join();
 
 	return 0;
 }
@@ -142,9 +135,9 @@ void frame_draw (void) {
 	clrscr();
 
 	set_display_atrib(DISPLAY_BACKGROUND);
-    puts(WIN);
+    	puts(WIN);
 
-    print_columnames (COLUMNAMES);
+    	print_columnames (COLUMNAMES);
  
 	resetcolor();
 }
@@ -154,7 +147,7 @@ void print_alarm (int alarm_error) {
 	if (alarm_error) {
 		set_display_atrib(DISPLAY_BRIGHT);
 		set_display_atrib(B_BLUE);
-        set_display_atrib(F_RED);
+        	set_display_atrib(F_RED);
 		printf("      Work ERROR       ");
 	} else {
 		set_display_atrib(DISPLAY_BRIGHT);
@@ -191,7 +184,7 @@ void print_port_bits (unsigned char port) {
 void print_columnames (const char* cn) {
 	set_display_atrib(DISPLAY_BRIGHT);
 	set_display_atrib(DISPLAY_BACKGROUND);
-    set_display_atrib(F_WHITE);
+    	set_display_atrib(F_WHITE);
 
 	gotoxy(frmColNam.X,frmColNam.Y)
 	puts(cn);
@@ -216,24 +209,24 @@ void print_time_date (struct tm* tm_info) {
 }
 
 void print_Data(payval& pv, stFrameXY& frm, const char * name, const char * coordinate) {
-    char buf[16] = {'\0'};
+    	char buf[16] = {'\0'};
 
 	SETDISPLAYATTRIBS
 
 	set_display_atrib(display_atrib + 0);
 	gotoxy(frm.X,frm.Y+0);
-    sprintf(buf, "%c%c = %+3.2f%c", name[0], coordinate[0], pv.f0, 0);
-    puts(buf);
+    	sprintf(buf, "%c%c = %+3.2f%c", name[0], coordinate[0], pv.f0, 0);
+    	puts(buf);
 
 	set_display_atrib(display_atrib + 1);
 	gotoxy(frm.X,frm.Y+1);
 	sprintf(buf, "%c%c = %+3.2f%c", name[1], coordinate[1], pv.f1, 0);
-    puts(buf);
+    	puts(buf);
 
 	set_display_atrib(display_atrib + 2);
 	gotoxy(frm.X,frm.Y+2);
 	sprintf(buf, "%c%c = %+3.2f%c", name[2], coordinate[2], pv.f2, 0);
-    puts(buf);
+    	puts(buf);
 
 	resetcolor();
 }
@@ -249,24 +242,24 @@ void frame_draw (void) {
 //--- ANSI/VT100 Terminal----------------------------------
 //           012345678901234567890123456789012345678
 	puts(	"┌─────────────────────────────────────┐\n" //0
-			"│                                     │\n" //1
-			"├─────────────────────────────────────┤\n" //2
-			"│                                     │\n" //3
+		"│                                     │\n" //1
+		"├─────────────────────────────────────┤\n" //2
+		"│                                     │\n" //3
 	     	"├─────────┐┌────────────┐┌────────────┤\n" //4
-			"│         ││            ││            │\n" //5
-			"│         ││            ││            │\n" //6
-			"│         ││            ││            │\n" //7
-			"│         │└────────────┘│            │\n" //8
-			"│         │┌────────────┐│            │\n" //9
-			"│         ││            ││            │\n" //0
-			"│         ││            ││            │\n" //1
-			"│         ││            ││            │\n" //2
-			"└─────────┘└────────────┘│            │\n" //3
-			"┌───────────────────────┐│            │\n" //4
-			"│                       ││            │\n" //5
-			"└───────────────────────┘└────────────┘"); //6
+		"│         ││            ││            │\n" //5
+		"│         ││            ││            │\n" //6
+		"│         ││            ││            │\n" //7
+		"│         │└────────────┘│            │\n" //8
+		"│         │┌────────────┐│            │\n" //9
+		"│         ││            ││            │\n" //0
+		"│         ││            ││            │\n" //1
+		"│         ││            ││            │\n" //2
+		"└─────────┘└────────────┘│            │\n" //3
+		"┌───────────────────────┐│            │\n" //4
+		"│                       ││            │\n" //5
+		"└───────────────────────┘└────────────┘"); //6
 
-    print_columnames (COLUMNAMES);
+    	print_columnames (COLUMNAMES);
  
 	resetcolor();
 }
